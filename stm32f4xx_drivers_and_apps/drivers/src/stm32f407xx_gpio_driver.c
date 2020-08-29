@@ -1,11 +1,17 @@
-/*
- * stm32f407xx_gpio_driver.c
- *
- *  Created on: Sep 7, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_gpio_driver.c
+  * @author  Moe2Code
+  * @brief   GPIO module driver.
+  *          This file provides firmware functions to manage the following
+  *          functionalities of the General Purpose Input/Output (GPIO) peripheral:
+  *           + Initialization and de-initialization functions
+  *           + IO operation functions
+  */
 
+/* Includes */
 #include "stm32f407xx_gpio_driver.h"
+
 
 /*
  * Peripheral Clock Setup

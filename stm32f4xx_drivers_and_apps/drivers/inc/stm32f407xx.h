@@ -1,24 +1,32 @@
-/*
- * stm32f407xx.h
- *
- *  Created on: Sep 2, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx.h
+  * @author  Moe2Code
+  * @brief   STM32F407xx Device Peripheral Access Layer Header File.
+  *
+  *          This file contains:
+  *           - Data structures and the address mapping for peripherals
+  *           - Peripherals registers declarations and bits definition
+  *           - Macros to access peripherals registers hardware
+*/
 
+/* Define to prevent recursive inclusion */
 #ifndef INC_STM32F407XX_H_
 #define INC_STM32F407XX_H_
 
+/* Includes */
 #include<stddef.h>
 #include<stdint.h>
 
+/* Defines */
 #define __vo volatile
 #define __weak __attribute__((weak))
+
 
 /*****************************************START:Processor Specific Details********************************************
  *
  * ARM Cortex Mx Processor NVIC ISERx register addresses
  */
-
 
 #define NVIC_ISER0							( (__vo uint32_t*)0xE000E100 )
 #define NVIC_ISER1							( (__vo uint32_t*)0xE000E104 )

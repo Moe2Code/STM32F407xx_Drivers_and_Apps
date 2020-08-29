@@ -1,32 +1,31 @@
-/*
- * 015UART_tx.c
- *
- *  Created on: Oct 11, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 015UART_tx.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that sends one message to an Arduino Uno via
+  * 				  UART using interrupt mode. The following pins configuration was used
+  * 				  on ST Discovery
+  * 				  PA2 --> USART2 TX
+  * 				  PA3 --> USART2 RX
+  * 				  Alternate function mode: 7
+  *******************************************************************************
+*/
 
+// Includes
 #include "stm32f407xx.h"
 #include <string.h>
 
 
+// Global variables
+char msg[1024] = "UART Tx testing..\r\n";
+USART_Handle_t USART2Handle;
+
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
-
-
-/*
- * PA2 --> USART2 TX
- * PA3 --> USART2 RX
- * Alternate function mode: 7
- */
-
-
-// Global variables
-
-char msg[1024] = "UART Tx testing..\r\n";
-
-USART_Handle_t USART2Handle;
 
 
 void USART2_GPIOInits(void)
@@ -39,7 +38,6 @@ void USART2_GPIOInits(void)
 	USART2Pins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
 	USART2Pins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 	USART2Pins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-
 
 	// TX
 	USART2Pins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_2;
@@ -83,6 +81,7 @@ void ButtonInit(void)
 int main (void)
 {
 
+	// Initializations of GPIOs and UART peripheral
 	USART2_GPIOInits();
 
 	USART2_Inits();
@@ -99,8 +98,8 @@ int main (void)
 		// to avoid button de-bouncing related issues. ~200ms of delay
 		delay();
 
+		// Send message, msg, to Arduino Uno
 		USART_SendData(&USART2Handle,(uint8_t*)msg, strlen(msg));
-
 	}
 
 	return 0;

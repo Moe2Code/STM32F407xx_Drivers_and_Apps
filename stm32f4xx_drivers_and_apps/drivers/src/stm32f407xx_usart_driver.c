@@ -1,10 +1,16 @@
-/*
- * stm32f407xx_usart_driver.c
- *
- *  Created on: Oct 8, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_usart_driver.c
+  * @author  Moe2Code
+  * @brief   USART module driver.
+  *          This file provides firmware functions to manage the following
+  *          functionalities of the Universal Synchronous Asynchronous Receiver Transmitter Peripheral (USART).
+  *           + Initialization and de-initialization functions
+  *           + IO operation functions
+  *           + Peripheral Control functions
+  */
 
+/* Includes */
 #include "stm32f407xx_usart_driver.h"
 
 

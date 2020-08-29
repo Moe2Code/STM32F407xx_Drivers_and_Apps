@@ -1,13 +1,16 @@
-/*
- * stm32f407xx_i2c_driver.h
- *
- *  Created on: Sep 27, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_i2c_driver.h
+  * @author  Moe2Code
+  * @brief   Header file of I2C module.
+  ******************************************************************************
+  */
 
+/* Define to prevent recursive inclusion */
 #ifndef INC_STM32F407XX_I2C_DRIVER_H_
 #define INC_STM32F407XX_I2C_DRIVER_H_
 
+/* Includes */
 #include "stm32f407xx.h"
 
 
@@ -118,7 +121,7 @@ typedef struct
 
 /*****************************************************************************************************
  *                                      APIs supported by this driver
- *                    For more information about this APIs check the function definitions
+ *                    For more information about these APIs check the function definitions
  *****************************************************************************************************/
 
 /*

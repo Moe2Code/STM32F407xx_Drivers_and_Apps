@@ -1,59 +1,63 @@
-/*
- * 011I2C_master_rx_testing.c
- *
- *  Created on: Oct 02, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 011I2C_master_rx_testing.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that uses ST Discovery board as a master to receive data
+  * 				  from Arduino Uno, slave, via I2C non-interrupt mode. The following pins configuration
+  * 				  was used on ST Discovery
+  * 				  PB6 -> SCL
+  * 				  PB7 -> SDA
+  * 				  Alternate Function Mode = 4	(I2C1/2/3)
+  *******************************************************************************
+*/
 
+// Includes
 #include <stdio.h>
 #include <string.h>
 #include "stm32f407xx.h"
 
+
+// Defines
 #define MYADDR		0x61
 #define SlaveAddr	0x68  // Acquired from Arduino serial monitor
+
+
+// Global variables
+// I2C1 handle
+I2C_Handle_t I2C1Handle;
+// Data received from Arduino slave will be stored in the rcv_buffer
+uint8_t rcv_buffer[32];
 
 
 // for semihosting to be able to use printf function
 extern void initialise_monitor_handles();
 
 
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
 
-I2C_Handle_t I2C1Handle;		// Global variable
-
-// Data received from Arduino slave will be stored in the rcv_buffer
-uint8_t rcv_buffer[32];
-
-/*
- * PB6 -> SCL
- * PB9 -> SDA
- * Alternate Function Mode = 4	(I2C1/2/3)
- */
-
 
 void I2C1_GPIOInits(void)
 {
-
 	GPIO_Handle_t I2CPins;
 
-		I2CPins.pGPIOx = GPIOB;
-		I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
-		I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
-		I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
-		I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
-		I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	I2CPins.pGPIOx = GPIOB;
+	I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
+	I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
+	I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
+	// SCL
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
+	GPIO_Init(&I2CPins);
 
-		// SCL
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
-		GPIO_Init(&I2CPins);
-
-		// SDA
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
-		GPIO_Init(&I2CPins);
+	// SDA
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	GPIO_Init(&I2CPins);
 }
 
 

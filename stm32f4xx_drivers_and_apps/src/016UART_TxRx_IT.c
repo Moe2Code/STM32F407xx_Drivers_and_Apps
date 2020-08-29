@@ -1,10 +1,17 @@
-/*
- * 016UART_TxRx_IT.c
- *
- *  Created on: Oct 13, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 016UART_TxRx_IT.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that sends/receives one message from an Arduino Uno
+  * 				  via UART using interrupt mode. The following pins configuration was used on
+  * 				  ST Discovery
+  * 				  PA2 --> USART2 TX
+  * 				  PA3 --> USART2 RX
+  * 				  Alternate function mode: 7
+  *******************************************************************************
+*/
 
+// Includes
 #include <stdio.h>
 #include <string.h>
 #include "stm32f407xx.h"
@@ -14,24 +21,15 @@
 extern void initialise_monitor_handles();
 
 
-/*
- * PA2 --> USART2 TX
- * PA3 --> USART2 RX
- * Alternate function mode: 7
- */
-
-
 // Global variables
-
 USART_Handle_t USART2Handle;
-
 char tx_msg[1024] = "UART testing..\r\n";
 char rx_msg[1024];
-
 uint8_t tx_cmplt = RESET;
 uint8_t rx_cmplt = RESET;
 
 
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);

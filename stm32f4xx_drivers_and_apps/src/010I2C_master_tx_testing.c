@@ -1,57 +1,61 @@
-/*
- * 010I2C_master_tx_testing.c
- *
- *  Created on: Sep 29, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 010I2C_master_tx_testing.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that uses ST Discovery board as a master to transmit data
+  * 				  to Arduino Uno, slave, via I2C non-interrupt mode. The following pins configuration
+  * 				  was used on ST Discovery
+  * 				  PB6 -> SCL
+  * 				  PB7 -> SDA
+  * 				  Alternate Function Mode = 4	(I2C1/2/3)
+  *******************************************************************************
+*/
 
+// Includes
 #include <stdio.h>
 #include <string.h>
 #include "stm32f407xx.h"
 
+
+// Defines
 #define MYADDR		0x61
 #define SlaveAddr	0x68  // Acquired from Arduino serial monitor
 
+
+// Global variables
+// I2C1 handle
+I2C_Handle_t I2C1Handle;
+// Data to send to Arduino slave
+// You cannot send more than 32 bytes in one transmission
+// This is due to limitation in the Arduino sketch WIRE library
+uint8_t user_data[] = "I2C com from master (STM32F4)\n";
+
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
 
-I2C_Handle_t I2C1Handle;		// Global variable
-
-// Data to send to Arduino slave
-// You cannot send more than 32 bytes in one transmission
-// This is due to limitation in the Arduino sketch WIRE library
-
-uint8_t user_data[] = "I2C com from master (STM32F4)\n";
-
-/*
- * PB6 -> SCL
- * PB9 -> SDA
- * Alternate Function Mode = 4	(I2C1/2/3)
- */
-
 
 void I2C1_GPIOInits(void)
 {
-
 	GPIO_Handle_t I2CPins;
 
-		I2CPins.pGPIOx = GPIOB;
-		I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
-		I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
-		I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
-		I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
-		I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	I2CPins.pGPIOx = GPIOB;
+	I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
+	I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
+	I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
+	// SCL
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
+	GPIO_Init(&I2CPins);
 
-		// SCL
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
-		GPIO_Init(&I2CPins);
-
-		// SDA
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
-		GPIO_Init(&I2CPins);
+	// SDA
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	GPIO_Init(&I2CPins);
 }
 
 
@@ -88,7 +92,6 @@ void ButtonInit(void)
 
 int main(void)
 {
-
 	//I2Cx pins init
 	I2C1_GPIOInits();
 

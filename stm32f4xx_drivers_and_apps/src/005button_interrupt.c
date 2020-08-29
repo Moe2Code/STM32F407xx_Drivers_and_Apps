@@ -1,22 +1,29 @@
-/*
- * 005button_interrupt.c
- *
- *  Created on: Sep 15, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 005button_interrupt.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that uses GPIO interrupts to turn on/off
+  * 				  an LED connected to PD12 when the button at PD5 is pushed. ST
+  * 				  Discovery board is used in this application.
+  *******************************************************************************
+*/
 
+// Includes
 #include<string.h>
 #include "stm32f407xx.h"
 
+
+// Defines
 #define HIGH		 	1
 #define BTN_PRESSED 	HIGH
 
+
+// Simple delay function
 void delay(void)
 {
 	//this will introduce ~200 ms delay when system clock is 16 MHz
 	for(uint32_t i=0; i<=500000/2; i++);
 }
-
 
 int main(void)
 {

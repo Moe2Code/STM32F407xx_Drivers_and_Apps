@@ -1,60 +1,59 @@
-/*
- * 013I2C_slave_tx_string.c
- *
- *  Created on: Oct 06, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 013I2C_slave_tx_large_string.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that sends a large message from ST Discovery board (slave)
+  * 				  to Arduino Uno (master) via I2C. The following pins configuration was used on ST
+  * 				  Discovery
+  * 				  PB6 -> SCL
+  * 				  PB7 -> SDA
+  * 				  Alternate Function Mode = 4	(I2C1/2/3)
+  *******************************************************************************
+*/
 
+// Includes
 #include <stdio.h>
 #include <string.h>
 #include "stm32f407xx.h"
 
+
+// Defines
 #define SLAVE_ADDR	0x68
 #define MY_ADDR		SLAVE_ADDR
 
 
+// Global variables
+I2C_Handle_t I2C1Handle;
+uint32_t data_len =0;
+// Large data to transmit from slave (STM board) to master (Arduino board). More than 32 bytes.
+uint8_t tx_buffer[] = "This is I2C slave. This is a long string. Hi hello howdy! Today is Tuesday 15-Oct-2019. It is sunny outside :)";
+
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
 
 
-// Global variables
-I2C_Handle_t I2C1Handle;
-uint32_t data_len =0;
-
-
-// Large data to transmit from slave (STM board) to master (Arduino board). More than 32 bytes.
-uint8_t tx_buffer[] = "This is I2C slave. This is a long string. Hi hello howdy! Today is Tuesday 15-Oct-2019. It is sunny outside :)";
-
-
-/*
- * PB6 -> SCL
- * PB7 -> SDA
- * Alternate Function Mode = 4	(I2C1/2/3)
- */
-
-
 void I2C1_GPIOInits(void)
 {
-
 	GPIO_Handle_t I2CPins;
 
-		I2CPins.pGPIOx = GPIOB;
-		I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
-		I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
-		I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
-		I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
-		I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	I2CPins.pGPIOx = GPIOB;
+	I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
+	I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
+	I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
+	// SCL
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
+	GPIO_Init(&I2CPins);
 
-		// SCL
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
-		GPIO_Init(&I2CPins);
-
-		// SDA
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
-		GPIO_Init(&I2CPins);
+	// SDA
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	GPIO_Init(&I2CPins);
 }
 
 
@@ -77,7 +76,6 @@ void I2C1_Inits(void)
 
 int main(void)
 {
-
 	data_len = strlen((char*)tx_buffer);
 
 	//I2Cx pins init
@@ -131,7 +129,6 @@ uint32_t wcnt = 0;			//  counter for bytes transmitted/written to master
 
 void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t AppEvent)
 {
-
 	if(AppEvent == I2C_EV_DATA_SND)
 	{
 		// Master requested some data. Slave has to send it

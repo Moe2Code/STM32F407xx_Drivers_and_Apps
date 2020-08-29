@@ -1,59 +1,58 @@
-/*
- * 013I2C_slave_tx_string.c
- *
- *  Created on: Oct 06, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 013I2C_slave_tx_string.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that sends a message from ST Discovery board (slave)
+  * 				  to Arduino Uno (master) via I2C. The following pins configuration was used
+  * 				  on ST Discovery
+  * 				  PB6 -> SCL
+  * 				  PB7 -> SDA
+  * 				  Alternate Function Mode = 4	(I2C1/2/3)
+  *******************************************************************************
+*/
 
+// Includes
 #include <stdio.h>
 #include <string.h>
 #include "stm32f407xx.h"
 
+
+// Defines
 #define SLAVE_ADDR	0x69
 #define MY_ADDR		SLAVE_ADDR
 
 
+// Global variables
+I2C_Handle_t I2C1Handle;
+// Data to transmit from slave (STM board) to master (Arduino board)
+uint8_t tx_buffer[32] = "I2C slave mode is fun..";		// Do not send more than 32 bytes (limitation of Arduino wire library)
+
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
 
 
-// Global variables
-I2C_Handle_t I2C1Handle;
-
-
-// Data to transmit from slave (STM board) to master (Arduino board)
-uint8_t tx_buffer[32] = "I2C slave mode is fun..";		// Do not send more than 32 bytes (limitation of Arduino wire library)
-
-
-/*
- * PB6 -> SCL
- * PB7 -> SDA
- * Alternate Function Mode = 4	(I2C1/2/3)
- */
-
-
 void I2C1_GPIOInits(void)
 {
-
 	GPIO_Handle_t I2CPins;
 
-		I2CPins.pGPIOx = GPIOB;
-		I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
-		I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
-		I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
-		I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
-		I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	I2CPins.pGPIOx = GPIOB;
+	I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+	I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
+	I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
+	I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	I2CPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
+	// SCL
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
+	GPIO_Init(&I2CPins);
 
-		// SCL
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
-		GPIO_Init(&I2CPins);
-
-		// SDA
-		I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
-		GPIO_Init(&I2CPins);
+	// SDA
+	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	GPIO_Init(&I2CPins);
 }
 
 
@@ -76,7 +75,6 @@ void I2C1_Inits(void)
 
 int main(void)
 {
-
 	//I2Cx pins init
 	I2C1_GPIOInits();
 

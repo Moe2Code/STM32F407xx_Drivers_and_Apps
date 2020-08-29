@@ -1,27 +1,28 @@
-/*
- * 007SPI_txonly_arduino.c
- *
- *  Created on: Sep 22, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 007SPI_txonly_arduino.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that uses the ST Discovery board as a master to transmits data
+  * 				  via SPI to Arduino Uno board, slave. The following pins configuration was used on ST
+  * 				  Discovery
+  * 				  PB14 --> SPI2_MISO
+  * 				  PB15 --> SPI2_MOSI
+  * 				  PB13 --> SPI2_SCLK
+  * 				  PB12 --> SPI2_NSS
+  * 				  Alternate function mode: 5
+  *******************************************************************************
+*/
 
+// Includes
 #include "stm32f407xx.h"
 #include <string.h>
 
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
-
-/*
- * PB14 --> SPI2_MISO
- * PB15 --> SPI2_MOSI
- * PB13 --> SPI2_SCLK
- * PB12 --> SPI2_NSS
- * Alternate function mode: 5
- */
-
-
 
 void SPI2_GPIOInits(void)
 {
@@ -50,7 +51,6 @@ void SPI2_GPIOInits(void)
 	//NSS
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
 	GPIO_Init(&SPIPins);
-
 }
 
 void SPI2_Inits(void)
@@ -91,10 +91,10 @@ int main (void)
 
 	ButtonInit();
 
-	// this function is used to initialize the GPIO pins to behave as SPI2 pins
+	// initialize the GPIO pins to behave as SPI2 pins
 	SPI2_GPIOInits();
 
-	// this function is used to initialize SPI2 peripheral parameters
+	// initialize SPI2 peripheral parameters
 	SPI2_Inits();
 
 	/*

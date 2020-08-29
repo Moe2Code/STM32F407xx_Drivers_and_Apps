@@ -1,15 +1,21 @@
-/*
- * stm32f407xx_spi_driver.c
- *
- *  Created on: Sep 17, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_spi_driver.c
+  * @author  Moe2Code
+  * @brief   SPI module driver.
+  *          This file provides firmware functions to manage the following
+  *          functionalities of the Serial Peripheral Interface (SPI) peripheral:
+  *           + Initialization and de-initialization functions
+  *           + IO operation functions
+  *           + Peripheral Control functions
+  */
 
+/* Includes */
 #include "stm32f407xx_spi_driver.h"
 
 
+/* Private function prototypes */
 // Interrupt implementation helper functions
-
 static void spi_txe_interrupt_handle(SPI_Handle_t *pSPIHandle);
 static void spi_rxne_interrupt_handle(SPI_Handle_t *pSPIHandle);
 static void spi_ovr_err_interrupt_handle(SPI_Handle_t *pSPIHandle);

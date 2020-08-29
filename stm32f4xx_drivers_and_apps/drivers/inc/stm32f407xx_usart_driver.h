@@ -1,15 +1,16 @@
-/*
- * stm32f407xx_usart_driver.h
- *
- *  Created on: Oct 8, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_usart_driver.h
+  * @author  Moe2Code
+  * @brief   Header file of USART module.
+*/
 
+/* Define to prevent recursive inclusion */
 #ifndef INC_STM32F407XX_USART_DRIVER_H_
 #define INC_STM32F407XX_USART_DRIVER_H_
 
+/* Includes */
 #include "stm32f407xx.h"
-//#include <stdint.h>
 
 
 /*

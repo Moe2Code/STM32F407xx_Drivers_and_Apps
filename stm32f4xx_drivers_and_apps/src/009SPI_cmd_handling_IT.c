@@ -1,54 +1,58 @@
-/*
- * 009SPI_cmd_handling_IT.c
- *
- *  Created on: Sep 26, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 009SPI_cmd_handling_IT.c
+  * @author         : Moe2Code
+  * @brief          : This is an application that uses ST Discovery board as a master to interact
+  * 				  with an Arduino Uno board, slave, via SPI interrupt mode. Discovery sends
+  * 				  commands to turn on LED, request LED status, request board ID, or read analog
+  * 				  sensor. Arduino Uno reacts/responds back appropriately. The following pins
+  * 				  configuration was used on ST Discovery
+  * 				  PB14 --> SPI2_MISO
+  * 				  PB15 --> SPI2_MOSI
+  * 				  PB13 --> SPI2_SCLK
+  * 				  PB12 --> SPI2_NSS
+  * 				  Alternate function mode: 5
+  *******************************************************************************
+*/
 
-
+// Includes
 #include <stdio.h>
 #include <string.h>
 #include "stm32f407xx.h"
 
-// for semihosting to be able to use printf function
-extern void initialise_monitor_handles();
 
-// command codes
-
+// Defines
+// Command codes
 #define COMMAND_LED_CTRL		0x50
 #define COMMAND_SENSOR_READ		0x51
 #define COMMAND_LED_READ		0x52
 #define COMMAND_PRINT			0x53
 #define COMMAND_ID_READ			0x54
-
 #define LED_ON					1
 #define	LED_OFF					0
-
 // Arduino analog pins
-
 #define ANALOG_PIN0				0
 #define ANALOG_PIN1				1
 #define ANALOG_PIN2				2
 #define ANALOG_PIN3				3
 #define ANALOG_PIN4				4
-
 // Arduino LED
-
 #define LED_PIN					9
 
+
+// Global variables
+// SPI2Handle is made a global variable in order to be able to use in SPI2_IRQHandler function
+SPI_Handle_t SPI2Handle;
+
+
+// for semihosting to be able to use printf function
+extern void initialise_monitor_handles();
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
-
-/*
- * PB14 --> SPI2_MISO
- * PB15 --> SPI2_MOSI
- * PB13 --> SPI2_SCLK
- * PB12 --> SPI2_NSS
- * Alternate function mode: 5
- */
-
 
 void SPI2_GPIOInits(void)
 {
@@ -60,7 +64,6 @@ void SPI2_GPIOInits(void)
 	SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
 	SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 	SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-
 
 	// SCLK
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
@@ -79,9 +82,6 @@ void SPI2_GPIOInits(void)
 	GPIO_Init(&SPIPins);
 
 }
-
-SPI_Handle_t SPI2Handle;   // SPI2Handle is made a global variable in order to
-						   // be able to use in SPI2_IRQHandler function
 
 void SPI2_Inits(void)
 {
@@ -111,7 +111,6 @@ void ButtonInit(void)
 
 	GPIO_Init(&GpioButton);
 }
-
 
 uint8_t SPI_VerifyResponse(uint8_t ackbyte)
 {
@@ -394,5 +393,6 @@ void SPI2_IRQHandler(void)
 	SPI_IRQHandling(&SPI2Handle);
 }
 
+// To do:
 // implement spi callback function
 // use ovr clear flag function

@@ -1,21 +1,24 @@
-/*
- * 001LED_Toggle.c
- *
- *  Created on: Sep 10, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file           : 001LED_Toggle.c
+  * @author         : Moe2Code
+  * @brief          : Simple application that toggles an LED on/off continuously on
+  *                   an ST Discovery board
+  *******************************************************************************
+*/
 
+// Includes
 #include "stm32f407xx.h"
 
+
+// Simple delay function
 void delay(void)
 {
 	for(uint32_t i=0; i<=500000; i++);
 }
 
-
 int main(void)
 {
-
 	GPIO_Handle_t GpioLed;
 
 	GpioLed.pGPIOx = GPIOD;

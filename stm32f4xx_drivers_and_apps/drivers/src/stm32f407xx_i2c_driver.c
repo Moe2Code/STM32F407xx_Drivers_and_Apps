@@ -1,28 +1,29 @@
-/*
- * stm32f407xx_i2c_driver.c
- *
- *  Created on: Sep 27, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_i2c_driver.c
+  * @author  Moe2Code
+  * @brief   I2C module driver.
+  *          This file provides firmware functions to manage the following
+  *          functionalities of the Inter Integrated Circuit (I2C) peripheral:
+  *           + Initialization and de-initialization functions
+  *           + IO operation functions
+  */
 
+/* Includes */
 #include "stm32f407xx_i2c_driver.h"
 
 
-/*
- * Operations for address phase
- */
-
+/* Defines */
+// Operations for address phase
 #define AddrWrite			0
 #define AddrRead			1
 
 
+/* Private function prototypes */
 static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
 static void I2C_ExecuteAddressPhase(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr, uint8_t Operation);
 static void I2C_ClearADDRFlag(I2C_RegDef_t *pI2Cx);
-
-
 // Interrupt Helper Functions
-
 static void I2C_ClearADDRFlagIT(I2C_Handle_t *pI2CHandle);
 static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t *pI2CHandle);
 static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle);

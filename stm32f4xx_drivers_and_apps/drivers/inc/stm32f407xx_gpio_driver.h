@@ -1,22 +1,22 @@
-/*
- * stm32f407xx_gpio_driver.h
- *
- *  Created on: Sep 7, 2019
- *      Author: Mohammed
- */
+/**
+  ******************************************************************************
+  * @file    stm32f407xx_gpio_driver.h
+  * @author  Moe2Code
+  * @brief   Header file of GPIO module.
+  ******************************************************************************
+  */
 
+/* Define to prevent recursive inclusion */
 #ifndef INC_STM32F407XX_GPIO_DRIVER_H_
 #define INC_STM32F407XX_GPIO_DRIVER_H_
 
+/* Includes */
 #include "stm32f407xx.h"
-//#include <stdint.h>
 
 
 /*
  * This is a Configuration structure for a GPIO
  */
-
-
 
 typedef struct
 {
@@ -105,7 +105,7 @@ typedef struct
 
 /*****************************************************************************************************
  *                                      APIs supported by this driver
- *                    For more information about this APIs check the function definitions
+ *                    For more information about these APIs check the function definitions
  *****************************************************************************************************/
 
 /*
@@ -124,7 +124,6 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx);
 /*
  * Data Read and Write
  */
-
 
 uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx);
