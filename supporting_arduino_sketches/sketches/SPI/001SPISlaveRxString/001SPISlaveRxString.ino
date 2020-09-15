@@ -1,14 +1,16 @@
-/* SPI Slave Demo
-
- *
- * SPI pin numbers:
- * SCK   13  // Serial Clock.
- * MISO  12  // Master In Slave Out.
- * MOSI  11  // Master Out Slave In.
- * SS    10  // Slave Select . Arduino SPI pins respond only if SS pulled low by the master
- *
- 
+/*
+ * Project: SPISlaveRxString
+ * Description: Sketch to demo SPI slave (Arduino Uno) receiving a message from SPI master (ST Discovery board). 
+ *				The following used:
+ *				+ Arduino Uno
+ *				+ SPI SCK Pin	13   (Serial Clock)
+ *				+ SPI MISO Pin	12   (Master In Slave Out)
+ *				+ SPI MOSI Pin	11   (Master Out Slave In)
+ *				+ SPI SS Pin	10   (Slave Select . Arduino SPI pins respond only if SS pulled low by the master)
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
  */
+
 #include <SPI.h>
 #include<stdint.h>
 #define SPI_SCK 13

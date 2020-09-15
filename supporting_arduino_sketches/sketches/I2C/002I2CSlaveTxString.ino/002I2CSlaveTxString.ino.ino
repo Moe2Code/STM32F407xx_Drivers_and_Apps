@@ -1,3 +1,16 @@
+/*
+ * Project: I2CSlaveTxString
+ * Description: Arduino Uno is used as I2C slave transmitter and receiver. ST Discovery board (master) will
+ *				transmit a command. Arduino Uno will receive the command and will send  one of two messages
+ *				depending on the command. The following used:
+ *				+ Arduino Uno
+ *				+ I2C SDA Pin: A4
+ *				+ I2C SCL Pin: A5
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
+ */
+
+// Includes
 #include <Bridge.h>
 #include <BridgeClient.h>
 #include <BridgeServer.h>
@@ -11,11 +24,9 @@
 #include <YunClient.h>
 #include <YunServer.h>
 
-// Wire Slave Transmitter and receiver
-//Uno, Ethernet A4 (SDA), A5 (SCL)
+// Include the required Wire library for I2C
 #include <Wire.h>
 
-// Include the required Wire library for I2C<br>#include <Wire.h>
 int LED = 13;
 uint8_t active_command = 0xff,led_status=0;
 char name_msg[32] = "I2C com with interrupts\n";
@@ -28,6 +39,7 @@ uint8_t get_len_of_data(void)
 {
   return (uint8_t)strlen(name_msg);
 }
+
 void setup() {
   // Define the LED pin as Output
   pinMode (LED, OUTPUT);
@@ -41,7 +53,6 @@ void setup() {
 
 
 }
-
 
 //write
 void receiveEvent(int bytes) {
@@ -58,7 +69,6 @@ void requestEvent() {
     active_command = 0xff;
   }
   
-
   if(active_command == 0x52)
   {
    // Wire.write(strlen(name));
@@ -69,7 +79,8 @@ void requestEvent() {
   //Wire.write("hello "); // respond with message of 6 bytes
   // as expected by master
 }
-void loop() {
-  
 
+void loop() 
+{
+  
 }

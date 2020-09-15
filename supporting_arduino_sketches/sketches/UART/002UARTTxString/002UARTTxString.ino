@@ -1,4 +1,15 @@
-
+/*
+ * Project: UARTTxString
+ * Description: Sketch to demo receiving and transmitting a message via UART to ST Discovery board.
+ *				Discovery will send a string. Arduino Uno will receive the sting and change the case
+ *				for each letter. Finally Arduino Uno will send the string back to Discovery via UART.
+ *				The following was used:
+ *				+ Arduino Uno
+ *				+ UART Tx: Digital Pin 1
+ *				+ UART Rx: Digital Pin 0
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
+ */
 
 void setup() {
   Serial.begin(115200);

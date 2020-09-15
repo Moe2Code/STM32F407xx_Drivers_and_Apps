@@ -1,4 +1,12 @@
-
+/*
+ * Project: UARTRxString
+ * Description: Sketch to demo receiving a message via UART from ST Discovery board
+ *				+ Arduino Uno
+ *				+ UART Tx: Digital Pin 1
+ *				+ UART Rx: Digital Pin 0
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
+ */
 
 void setup() {
   Serial.begin(115200);

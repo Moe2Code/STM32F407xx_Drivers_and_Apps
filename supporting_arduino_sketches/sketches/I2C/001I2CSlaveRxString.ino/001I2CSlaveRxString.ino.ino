@@ -1,13 +1,25 @@
-// Wire Slave Receiver
-//Uno, Ethernet A4 (SDA), A5 (SCL)
+/*
+ * Project: I2CSlaveRxString
+ * Description: Arduino Uno is used as I2C slave to receive a message from ST Discovery board (master). 
+ *              The following used:
+ *				+ Arduino Uno
+ *				+ I2C SDA Pin: A4
+ *				+ I2C SCL Pin: A5
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
+ */
+
+// Includes
 #include <Wire.h>
 
+// Defines
 #define MY_ADDR   0x68
 
 int LED = 13;
 char rx_buffer[32] ;
 uint32_t cnt =0;
 uint8_t message[50];
+
 void setup() {
 
   Serial.begin(9600);

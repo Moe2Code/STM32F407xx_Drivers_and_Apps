@@ -1,12 +1,15 @@
 /*
-
- * SPI pin numbers:
- * SCK   13  // Serial Clock.
- * MISO  12  // Master In Slave Out.
- * MOSI  11  // Master Out Slave In.
- * SS    10  // Slave Select
- *
-
+ * Project: SPISlaveCmdHandling
+ * Description: Sketch to demo SPI slave transmitter and receiver. ST Discovery board (master) sends
+  * 		    commands to turn on LED, request LED status, request board ID, or read analog
+  * 			sensor. Arduino Uno (slave) reacts/responds back appropriately. The following used:
+ *				+ Arduino Uno
+ *				+ SPI SCK Pin	13   (Serial Clock)
+ *				+ SPI MISO Pin	12   (Master In Slave Out)
+ *				+ SPI MOSI Pin	11   (Master Out Slave In)
+ *				+ SPI SS Pin	10   (Slave Select . Arduino SPI pins respond only if SS pulled low by the master)
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
  */
 
 #include <SPI.h>
@@ -63,7 +66,6 @@ uint8_t SPI_SlaveReceive(void)
   return SPDR;
 }
 
-
 //sends one byte of data 
 void SPI_SlaveTransmit(uint8_t data)
 {
@@ -74,7 +76,6 @@ void SPI_SlaveTransmit(uint8_t data)
   while(!(SPSR & (1<<SPIF)));
 }
   
-
 // The setup() function runs after reset.
 void setup() 
 {
@@ -91,7 +92,6 @@ void setup()
   
   Serial.println("Slave Initialized");
 }
-
 
 byte checkData(byte commnad)
 {
@@ -146,8 +146,6 @@ void loop()
     
     Serial.println("RCVD:COMMAND_SENSOR_READ");
   
-    
-  
   }else if ( command == COMMAND_LED_READ)
   {
     uint8_t pin = SPI_SlaveReceive(); 
@@ -176,6 +174,4 @@ void loop()
       SPI_SlaveReceive();
     Serial.println("RCVD:COMMAND_ID_READ");
   }
- 
-
 }

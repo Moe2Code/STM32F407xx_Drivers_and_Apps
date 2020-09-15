@@ -1,8 +1,18 @@
-// Wire Master Transmitter and Receiver 
-//Uno, Ethernet A4 (SDA), A5 (SCL)
+/*
+ * Project: I2CMasterRxStringLarge
+ * Description: I2C master (Arduino Uno) receives a large message (string) from I2C slave (ST Discovery board). 
+ *				The following used:
+ *				+ Arduino Uno
+ *				+ I2C SDA Pin: A4
+ *				+ I2C SCL Pin: A5
+ * Author: niekiran 
+ * https://github.com/niekiran/MasteringMCU/tree/master/Resources/Arduino
+ */
+
+// Include the required Wire library for I2C
 #include <Wire.h>
 
-// Include the required Wire library for I2C<br>#include <Wire.h>
+
 int LED = 13;
 
 uint8_t rcv_buf[512];
@@ -17,10 +27,7 @@ void setup() {
   pinMode (LED, OUTPUT);
   
   // join i2c bus (address optional for master)
-  Wire.begin(); 
-
-   
-  
+  Wire.begin();
 }
 
 
