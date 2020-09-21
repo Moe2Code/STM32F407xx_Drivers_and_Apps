@@ -1,0 +1,28 @@
+INSTRUCTIONS ON HOW TO USE STM32F407XX DRIVERS AND APPS
+
+Hardware Used:
+
+1- STM32F407G DISCOVERY board, Qty 1
+2- A000066 Arduino Uno, Qty 1
+3- 3-01-0015 HiLetgo USB Logic Analyzer, Qty 1
+4- Jumper wires (Male to Male (Qty 10), Female to Female (Qty 10), Male to Female (Qty 10))
+
+Software Used:
+
+1- Eclipse based System WorkBench IDE (SW4STM32), Version 1.8 or later
+2- ST-LINK/V2 Device Driver (Onboard Programmer and Debugger for Discovery board)
+3- Saleae Logic, Version 1.2.18 (Software to analyze protocol signals)
+
+Wiring:
+
+- Each application may require different wiring on Discovery board, or both, Discovery and Arduino Uno boards
+- The wiring will be detailed in Discovery's src files (within folder "src") and Arduino's sketches (within the folder "sketches")
+
+How to run each application:
+
+- Load Discovery's drivers and applications on the IDE. Build the application of interest and flash on Discovery board
+- Load the Arduino Uno sketch needed to work with Discovery's application
+- Follow the instructions for the application. This is detailed within source file for Discovery and the sketch for Arduino Uno 
+
+
+
